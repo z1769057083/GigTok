@@ -1,0 +1,21 @@
+module.exports = {
+    introduce:'一个可以互相抢数字币红包的APP',
+    first:{
+        title:'我们能够做到',
+        in1:'互动',
+        in2:'安全',
+        in3:'便捷'
+    },
+    second:{
+        title:'海量用户',
+        in1:'百分用户实时红包领不停'
+    },
+    third:{
+        title:'信息安全',
+        in1:'信息全程加密保证您的消息安全'
+    },
+    fourth:{
+        title:'简单易用',
+        in1:'界面友好功能强大操作便捷'
+    }
+}

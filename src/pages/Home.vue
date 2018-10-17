@@ -1,61 +1,65 @@
 <template>
   <div class="home-wrap">
-    <div class="btn-transfer" @click="transfer"><img src="../assets/images/fy_down.png" alt=""><span>{{lang}}</span></div>
+    <div class="btn-transfer" @click="transfer"><img :class="{active:lang==='English'?true:false}" src="../assets/images/fy_down.png" alt=""><span>{{lang}}</span></div>
     <div class="btn-next"><img src="../assets/images/next.png" @click="handleNext" alt=""></div>
     <ul class="box">
-      <li class="first" :class="[{active:activeIndex===1?true:false}]">
+      <transition-group enter-active-class="fadeInDown" leave-active-class="fadeOutDown" enter-class="enter" eave-class="enter">
+      <li class="first animated" v-show="activeIndex===1?true:false" :class="[{active:activeIndex===1?true:false}]" key="first">
         <img src="../assets/images/logo.png" alt="" class="logo">
         <div class="box">
-          <p class="p1">GigTok</p>
-          <p class="p2">一个可以互相抢数字币红包的APP</p>
-          <p class="p3">
+          <transition enter-active-class="bounceIn"  enter-class="enter" eave-class="enter">
+            <p class="p1" key="p1">GigTok</p>
+          </transition>
+          <p class="p2" key="p2">{{$t("introduce")}}</p>
+          <p class="p3" key="p3">
             <img src="../assets/images/logo_app.png" alt="" class="img1">
             <span class="btn-download">
               Android
             </span>
           </p>
+
         </div>
         <img class="intro-img" src="../assets/images/pic_1.png" alt="">
       </li>
-      <li class="second" :class="[{active:activeIndex===2?true:false}]">
-        <p>我们能够做到</p>
+      <li class="second animated" v-show="activeIndex===2?true:false" :class="[{active:activeIndex===2?true:false}]" key="second">
+        <p>{{$t("first.title")}}</p>
         <section>
           <dl>
             <dt><img src="../assets/images/pic_hd.png" alt=""></dt>
-            <dd>互动</dd>
+            <dd>{{$t("first.in1")}}</dd>
           </dl>
           <dl>
             <dt><img src="../assets/images/pic_aq.png" alt=""></dt>
-            <dd>安全</dd>
+            <dd>{{$t("first.in2")}}</dd>
           </dl>
           <dl>
             <dt><img src="../assets/images/pic_bj.png" alt=""></dt>
-            <dd>便捷</dd>
+            <dd>{{$t("first.in3")}}</dd>
           </dl>
         </section>
       </li>
-      <li class="third" :class="[{active:activeIndex===3?true:false}]">
+      <li class="third animated" v-show="activeIndex===3?true:false" :class="[{active:activeIndex===3?true:false}]" key="third">
         <div class="left">
-          <p class="p1">海量用户</p>
-          <p class="p2">百分用户实时红包领不停</p>
+          <p class="p1">{{$t("second.title")}}</p>
+          <p class="p2">{{$t("second.in1")}}</p>
         </div>
         <div class="right">
           <img src="../assets/images/pic_hlyh.png" alt="">
         </div>
       </li>
-      <li class="fourth" :class="[{active:activeIndex===4?true:false}]">
+      <li class="fourth animated" v-show="activeIndex===4?true:false" :class="[{active:activeIndex===4?true:false}]" key="fourth">
         <div class="left">
           <img src="../assets/images/pic_xxaq.png" alt="">
         </div>
         <div class="right">
-          <p class="p1">信息安全</p>
-          <p class="p2">信息全程加密保证您的消息安全</p>
+          <p class="p1">{{$t("third.title")}}</p>
+          <p class="p2">{{$t("third.in1")}}</p>
         </div>
       </li>
-      <li class="fifth" :class="[{active:activeIndex===5?true:false}]">
+      <li class="fifth animated" v-show="activeIndex===5?true:false" :class="[{active:activeIndex===5?true:false}]" key="fifth">
         <div class="left">
-          <p class="p1">简单易用</p>
-          <p class="p2">界面友好功能强大操作便捷</p>
+          <p class="p1">{{$t("fourth.title")}}</p>
+          <p class="p2">{{$t("fourth.in1")}}</p>
           <p class="p3">
             <span class="btn-download">
               Android
@@ -66,6 +70,7 @@
           <img src="../assets/images/pic_jdyy.png" alt="">
         </div>
       </li>
+      </transition-group>
     </ul>
     <ul class="dot">
       <li v-for="i in 5" :key="i" :class="{'active': activeIndex===i?true:false}" @click="activeIndex=i"><div></div></li>
@@ -79,7 +84,7 @@
         data(){
           return{
             lang:'中文',
-              activeIndex:3
+              activeIndex:1
 
           }
         },
@@ -97,6 +102,8 @@
       },
       methods:{
           transfer(){
+              let locale = this.$i18n.locale
+              locale === 'zh' ? this.$i18n.locale = 'en' : this.$i18n.locale = 'zh'
               this.lang = this.lang === '中文' ? 'English' : '中文'
           },
           handleNext(){
@@ -135,6 +142,9 @@
     cursor: pointer;
     img{
       margin-right: 8px;
+      &.active{
+        transform: rotate(180deg);
+      }
     }
   }
   .btn-next{
@@ -231,6 +241,7 @@
              background-position: 21px center;
              background-size: 30px 36px;
              cursor: pointer;
+             font-size: 28px;
            }
          }
        }
