@@ -8,7 +8,7 @@ module.exports = {
     },
     second:{
         title:'海量用户',
-        in1:'百分用户实时红包领不停'
+        in1:'百万用户实时红包领不停'
     },
     third:{
         title:'信息安全',
