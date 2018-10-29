@@ -7,11 +7,47 @@ import 'lib-flexible/flexible'
 import '@/assets/less/reset.less'
 import '@/assets/less/animate.css'
 import {getCookie} from '../static/cookie.js'
+import {vueTouch} from '../static/touch.js'
 import VueI18n from 'vue-i18n'
 
 Vue.use(VueI18n)
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
+Vue.directive("tap",{
+    bind:function(el,binding){
+        new vueTouch(el,binding,"tap");
+    }
+});
+Vue.directive("swipe",{
+    bind:function(el,binding){
+        new vueTouch(el,binding,"swipe");
+    }
+});
+Vue.directive("swipeleft",{
+    bind:function(el,binding){
+        new vueTouch(el,binding,"swipeleft");
+    }
+});
+Vue.directive("swiperight",{
+    bind:function(el,binding){
+        new vueTouch(el,binding,"swiperight");
+    }
+});
+Vue.directive("swipedown",{
+    bind:function(el,binding){
+        new vueTouch(el,binding,"swipedown");
+    }
+});
+Vue.directive("swipeup",{
+    bind:function(el,binding){
+        new vueTouch(el,binding,"swipeup");
+    }
+});
+Vue.directive("longtap",{
+    bind:function(el,binding){
+        new vueTouch(el,binding,"longtap");
+    }
+});
     /* eslint-disable no-new */
 
 const i18n = new VueI18n({
@@ -22,7 +58,7 @@ const i18n = new VueI18n({
     }
 })
 
-new Vue({
+export default new Vue({
     el: '#app',
     router,
     i18n,

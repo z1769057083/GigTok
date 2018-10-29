@@ -1,24 +1,24 @@
 <template>
   <div class="home-wrap">
     <div class="btn-transfer" @click="transfer"><img :class="{active:lang==='English'?true:false}" src="../assets/images/fy_down.png" alt=""><span>{{lang}}</span></div>
-    <div class="btn-next"><img src="../assets/images/next.png" @click="handleNext" alt=""></div>
-    <ul class="box">
+    <div class="btn-next"><img src="../assets/images/next.gif" @click="handleNext" alt=""></div>
+    <ul class="box" @touchmove="handlMove">
       <transition-group :enter-active-class="direction==='down'?'slideInUp':'slideInDown'" :leave-active-class="direction==='down'?'slideOutUp':'slideOutDown'" enter-class="enter" eave-class="enter">
-      <li class="first animated" v-show="activeIndex===1?true:false" :class="[{active:activeIndex===1?true:false}]" key="first">
+      <li class="first animated" v-show="activeIndex===1?true:false" data-index="1" :class="[{active:activeIndex===1?true:false}]" key="first"  v-swipeup="{fn:moveup,index:1}">
         <img src="../assets/images/logo.png" alt="" class="logo">
         <div class="box">
             <p class="p1 animated swing" key="p1">GigTok</p>
           <p class="p2 animated flipInX" key="p2">{{$t("introduce")}}</p>
           <p class="p3" key="p3">
             <img class="img1 animated fadeInLeft" src="../assets/images/logo_app.png" alt="">
-            <span class="btn-download animated fadeInRight">
+            <span class="btn-download animated fadeInRight" @click="handleDownload">
               Android
             </span>
           </p>
         </div>
         <img class="intro-img animated pulse" src="../assets/images/pic_1.png" alt="">
       </li>
-      <li class="second animated" v-show="activeIndex===2?true:false" :class="[{active:activeIndex===2?true:false}]" key="second">
+      <li class="second animated" v-show="activeIndex===2?true:false" data-index="2" :class="[{active:activeIndex===2?true:false}]" key="second"  v-swipeup="{fn:moveup,index:2}">
         <p class="animated zoomIn">{{$t("first.title")}}</p>
         <section>
           <dl>
@@ -35,7 +35,7 @@
           </dl>
         </section>
       </li>
-      <li class="third animated" v-show="activeIndex===3?true:false" :class="[{active:activeIndex===3?true:false}]" key="third">
+      <li class="third animated" v-show="activeIndex===3?true:false" data-index="3" :class="[{active:activeIndex===3?true:false}]" key="third"  v-swipeup="{fn:moveup,index:3}">
         <div class="left">
           <p class="p1 animated rollIn">{{$t("second.title")}}</p>
           <p class="p2 animated rollIn">{{$t("second.in1")}}</p>
@@ -44,7 +44,7 @@
           <img class="animated bounceInRight" src="../assets/images/pic_hlyh.png" alt="">
         </div>
       </li>
-      <li class="fourth animated" v-show="activeIndex===4?true:false" :class="[{active:activeIndex===4?true:false}]" key="fourth">
+      <li class="fourth animated" v-show="activeIndex===4?true:false" data-index="4" :class="[{active:activeIndex===4?true:false}]" key="fourth"  v-swipeup="{fn:moveup,index:4}">
         <div class="left">
           <img class="animated rollIn" src="../assets/images/pic_xxaq.png" alt="">
         </div>
@@ -53,12 +53,12 @@
           <p class="p2 animated rotateInDownRight">{{$t("third.in1")}}</p>
         </div>
       </li>
-      <li class="fifth animated" v-show="activeIndex===5?true:false" :class="[{active:activeIndex===5?true:false}]" key="fifth">
+      <li class="fifth animated" v-show="activeIndex===5?true:false" data-index="5" :class="[{active:activeIndex===5?true:false}]" key="fifth"  v-swipeup="{fn:moveup,index:5}">
         <div class="left">
           <p class="p1 animated rollIn">{{$t("fourth.title")}}</p>
           <p class="p2 animated rollIn">{{$t("fourth.in1")}}</p>
           <p class="p3 animated rollIn">
-            <span class="btn-download">
+            <span class="btn-download" @click="handleDownload">
               Android
             </span>
           </p>
@@ -66,6 +66,7 @@
         <div class="right">
           <img class="animated bounceInRight" src="../assets/images/pic_jdyy.png" alt="">
         </div>
+        <div class="banquan">Ⓒ2018 All Rights Reserved By GigTok Foundation</div>
       </li>
       </transition-group>
     </ul>
@@ -157,7 +158,23 @@
                   this.direction = 'down';
               }
               this.activeIndex = i;
-          }
+          },
+          handlMove(e){
+              let index = e.target.dataset.index;
+
+              // console.log(e)
+          },
+          moveup(binding,e){
+              console.log('上滑')
+              this.activeIndex = binding.index;
+              this.handleNext();
+
+              console.log(e.target)
+          },
+          handleDownload(){
+              window.location.href= 'http://59.110.6.92/download/app/gigtok.apk'
+          },
+
       }
 
     }
@@ -228,7 +245,7 @@
    height: 100%;
    li{
      background-color: #fff;
-     position: absolute;
+     position: fixed;
      width:100%;
      height: 100%;
      z-index:1;
@@ -396,9 +413,16 @@
        }
      }
      &.fifth{
+       position:relative;
        display: flex;
        justify-content: center;
        align-items: center;
+       .banquan{
+         position: absolute;
+         bottom: 20px;
+         font-size: 12px;
+         color: #909099;
+       }
        .left{
          .p1{
            hieght: 67px;
@@ -460,7 +484,8 @@
 
         }
         &.first{
-
+          background: url("../assets/images/top_bg2.png") no-repeat;
+          background-size: cover;
           .intro-img{
             width: 580px;
             margin-top: 80px;
